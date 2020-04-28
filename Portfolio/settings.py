@@ -28,7 +28,7 @@ SECRET_KEY = '1kh(x(kdc2-^k=r)jjwn&#jfc0^@fj+*81jx_m+uopocs52*uu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = json.loads(os.environ["allowed_hosts"])
+ALLOWED_HOSTS = json.loads(os.environ["ALLOWED_HOSTS"])
 
 
 # Application definition
