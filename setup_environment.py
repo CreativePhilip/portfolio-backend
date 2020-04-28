@@ -11,6 +11,7 @@ export SECRET_KEY='{key}'
 export SECRET_KEY_PRIVATE=`cat {keypath}/id_rsa`
 export SECRET_KEY_PUBLIC=`cat {keypath}/id_rsa.pub`
 export ALLOWED_HOSTS='["localhost"]'
+export PRODUCTION='1'
 """
 
 
