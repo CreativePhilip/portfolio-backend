@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
+    'auth_app',
     'api',
-    'auth_app'
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
+}
 
 ROOT_URLCONF = 'Portfolio.urls'
 

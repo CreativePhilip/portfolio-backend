@@ -11,12 +11,13 @@ class ArticleSerializer(serializers.ModelSerializer):
             'text',
             'preview_text',
             'icon',
-            'category',
+            'categories',
             'previous_article',
             'next_article',
             'published',
             'upload_date'
         ]
+        read_only_fields = ['categories']
 
 
 class MiniArticleSerializer(serializers.ModelSerializer):
