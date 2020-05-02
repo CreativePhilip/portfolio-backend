@@ -12,13 +12,11 @@ from rest_framework.response import Response
 from api.models import Article,  Category, ArticleCategory
 from api.serializers import ArticleSerializer, CategorySerializer, MiniArticleSerializer
 
-from copy import deepcopy
-
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.filter(published=True)
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
 
     @action(methods=["get"], detail=True)
@@ -40,14 +38,19 @@ class ArticleViewSet(viewsets.ModelViewSet):
         if pk != -1:
             articles = articles.exclude(pk=pk)
 
-        return Response(self.serializer_class(articles, many=True).data)
+        return Response(self.serializer_class(articles, many=True, context={'request': request}).data)
+
+    @action(methods=['get'], detail=False, permission_classes=[])
+    def published(self, request: Request, pk=None):
+        articles = Article.objects.filter(published=True)
+        return Response(self.serializer_class(articles, many=True, context={'request': request}).data)
 
     @action(methods=['get'], detail=True, permission_classes=[])
     def by_category(self, request: Request, pk=None):
         category = get_object_or_404(Category, pk=pk)
         articles = [a.article for a in ArticleCategory.objects.filter(category=category)]
 
-        return Response(self.serializer_class(articles, many=True).data)
+        return Response(self.serializer_class(articles, many=True, context={'request': request}).data)
 
     @action(methods=['post'], detail=True)
     def edit_categories(self, request: Request, pk=None):

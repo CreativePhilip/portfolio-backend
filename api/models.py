@@ -25,7 +25,7 @@ class Article(models.Model):
     text = models.TextField()
     preview_text = models.TextField(max_length=500)
 
-    icon = models.ImageField(upload_to="icons", blank=True, null=True)
+    icon = models.ImageField(blank=True, null=True)
 
     previous_article = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, related_name="Article.previous_article+")
     next_article = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, related_name="Article.next_article+")
@@ -56,15 +56,16 @@ class Article(models.Model):
                 )
 
     def save(self, *args, **kwargs):
-        self.update_next_and_previous_articles()
         super(Article, self).save(*args, **kwargs)
 
     def update_next_and_previous_articles(self):
         if self.previous_article is not None:
             self.previous_article.next_article = self
+            self.previous_article.save()
 
         if self.next_article is not None:
             self.next_article.previous_article = self
+            self.next_article.save()
 
     def __str__(self):
         return self.title

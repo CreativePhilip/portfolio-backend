@@ -19,6 +19,12 @@ class ArticleSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['categories']
 
+    def save(self, **kwargs):
+        model: Article = super(ArticleSerializer, self).save(**kwargs)
+        model.update_next_and_previous_articles()
+
+        return model
+
 
 class MiniArticleSerializer(serializers.ModelSerializer):
     class Meta:
