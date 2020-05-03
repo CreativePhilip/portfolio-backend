@@ -55,9 +55,6 @@ class Article(models.Model):
                     category_id=i
                 )
 
-    def save(self, *args, **kwargs):
-        super(Article, self).save(*args, **kwargs)
-
     def update_next_and_previous_articles(self):
         if self.previous_article is not None:
             self.previous_article.next_article = self

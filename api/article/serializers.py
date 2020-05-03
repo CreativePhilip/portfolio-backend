@@ -1,5 +1,6 @@
-from .models import Article, Category
 from rest_framework import serializers
+
+from api.models import Article
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -32,15 +33,4 @@ class MiniArticleSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'title'
-        ]
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = [
-            'id',
-            'name',
-            'icon',
-            'description'
         ]
