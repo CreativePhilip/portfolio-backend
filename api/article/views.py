@@ -2,7 +2,6 @@ import json
 from json import JSONDecodeError
 
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -13,11 +12,13 @@ from api.article.serializers import ArticleSerializer, MiniArticleSerializer
 from rest_framework import mixins
 
 
-class ArticleViewSet(viewsets.ModelViewSet):
+class ArticleViewSet(viewsets.GenericViewSet,
+                     mixins.DestroyModelMixin,
+                     mixins.CreateModelMixin,
+                     mixins.UpdateModelMixin):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     permission_classes = [permissions.IsAdminUser]
-    filter_backends = [DjangoFilterBackend]
 
     @action(methods=['get'], detail=True, permission_classes=[permissions.IsAdminUser])
     def all_articles_shortened(self, request: Request, pk=None):
@@ -52,7 +53,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
         return Response(self.serializer_class(articles, many=True, context={'request': request}).data)
 
-    @action(methods=['post'], detail=True)
+    @action(methods=['post'], detail=True, permission_classes=[permissions.IsAdminUser])
     def edit_categories(self, request: Request, pk=None):
         article = get_object_or_404(Article, pk=pk)
         try:
