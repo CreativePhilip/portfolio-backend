@@ -15,6 +15,14 @@ export PRODUCTION='1'
 """
 
 
+ENV_TEMPLATE = """
+export SECRET_KEY='{key}'
+export SECRET_KEY_PRIVATE=`cat {keypath}/id_rsa`
+export SECRET_KEY_PUBLIC=`cat {keypath}/id_rsa.pub`
+export ALLOWED_HOSTS='["localhost"]'
+export PRODUCTION='1'
+"""
+
 def gen_ssh(dir):
     key = rsa.generate_private_key(
         backend=crypto_default_backend(),
@@ -42,12 +50,12 @@ def gen_key():
 
 
 def generate():
-    with open("secrets2.sh", "w") as file:
+    with open(".env", "w") as file:
         directory = os.path.join(os.getcwd(), "keys")
         if not os.path.exists(directory):
             os.mkdir(directory)
         gen_ssh(directory)
-        file.write(TEMPLATE.format(key=gen_key(), dbname="dbname", dbuser="dbuser", dbpass="dbpass", keypath=directory))
+        file.write(ENV_TEMPLATE.format(key=gen_key(), dbname="dbname", dbuser="dbuser", dbpass="dbpass", keypath=directory))
 
 
 if __name__ == '__main__':
