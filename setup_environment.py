@@ -50,7 +50,7 @@ def gen_key():
 
 
 def generate():
-    with open(".env", "w") as file:
+    with open("env.sh", "w") as file:
         directory = os.path.join(os.getcwd(), "keys")
         if not os.path.exists(directory):
             os.mkdir(directory)

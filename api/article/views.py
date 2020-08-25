@@ -18,7 +18,7 @@ class ArticleViewSet(viewsets.GenericViewSet,
                      mixins.UpdateModelMixin):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(methods=['get'], detail=True, permission_classes=[permissions.IsAdminUser])
     def all_articles_shortened(self, request: Request, pk=None):
