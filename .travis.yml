@@ -11,4 +11,5 @@ install:
 #  - python3.8 manage.py migrate
 
 script:
+  - python setup_environment.py
   - python manage.py test
