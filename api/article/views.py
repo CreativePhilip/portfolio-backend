@@ -20,8 +20,9 @@ class ArticleViewSet(viewsets.GenericViewSet,
     serializer_class = ArticleSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    @staticmethod
     @action(methods=['get'], detail=True, permission_classes=[permissions.IsAdminUser])
-    def all_articles_shortened(self, request: Request, pk=None):
+    def all_articles_shortened(request: Request, pk=None):
         articles = Article.objects.all()
         if pk != -1:
             articles = articles.exclude(pk=pk)
@@ -53,8 +54,9 @@ class ArticleViewSet(viewsets.GenericViewSet,
 
         return Response(self.serializer_class(articles, many=True, context={'request': request}).data)
 
+    @staticmethod
     @action(methods=['post'], detail=True, permission_classes=[permissions.IsAdminUser])
-    def edit_categories(self, request: Request, pk=None):
+    def edit_categories(request: Request, pk=None):
         article = get_object_or_404(Article, pk=pk)
         try:
             article.set_categories(json.loads(request.data["categories"]))

@@ -155,8 +155,8 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 
     'ALGORITHM': 'RS512',
-    'SIGNING_KEY': os.environ['SECRET_KEY_PRIVATE'],
-    'VERIFYING_KEY': os.environ['SECRET_KEY_PUBLIC'],
+    'SIGNING_KEY': os.environ['RSA_PRIV'],
+    'VERIFYING_KEY': os.environ['RSA_PUB'],
 
     'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
