@@ -26,7 +26,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ["PRODUCTION"] == '0' else False
+DEBUG = bool(os.environ["PRODUCTION"])
 
 ALLOWED_HOSTS = json.loads(os.environ["ALLOWED_HOSTS"])
 

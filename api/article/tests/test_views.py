@@ -87,7 +87,7 @@ class TestArticleView(TestCase):
         self.assertEqual(response2.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_all_published_response_without_authenticated_user(self):
-        response = self.client.get(f'/api/articles/all_published/')
+        response = self.client.get('/api/articles/all_published/')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
