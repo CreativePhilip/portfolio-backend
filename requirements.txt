@@ -4,7 +4,7 @@ cryptography==2.9.2
 Django==3.0.7
 django-cors-headers==3.2.1
 django-filter==2.2.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-simplejwt==4.4.0
 Markdown==3.2.1
 Pillow==7.1.1
